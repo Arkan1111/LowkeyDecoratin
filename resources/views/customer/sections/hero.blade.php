@@ -3,7 +3,7 @@
     <div class="cd-hero-content">
 
         <span class="cd-badge">
-            ✦ LOKI DECORATION • WEDDING SPECIALIST
+            LOWKEY DECORATION • WEDDING SPECIALIST
         </span>
 
         <span class="cd-eyebrow">
@@ -24,11 +24,11 @@
 
         <div class="cd-hero-actions">
             <a href="#paket" class="cd-btn-primary">
-                Eksplorasi Paket →
+                Eksplorasi Paket
             </a>
 
             <a href="#ketersediaan" class="cd-btn-light">
-                ♧ Booking Tanggal & Kuota
+                Booking Tanggal & Kuota
             </a>
         </div>
 

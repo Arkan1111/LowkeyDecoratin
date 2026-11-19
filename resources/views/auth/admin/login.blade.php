@@ -195,7 +195,10 @@
                         class="auth-google"
                         disabled
                         title="Login Google belum diaktifkan">
-                        <span class="google-letter" aria-hidden="true">G</span>
+                        <img
+                            src="{{ Vite::asset('resources/images/googlee.png') }}"
+                            alt="Lowkey Decoration"
+                            style="width: 15px !important; height: 15px !important; object-fit: contain;">
                         Lanjutkan dengan Google
                     </button>
 

@@ -6,3 +6,4 @@ import "./auth.js";
 import "../images/lowkey-removebg-preview.png";
 import "../images/emaill.png";
 import "../images/lockk.png";
+import "../images/googlee.png";
