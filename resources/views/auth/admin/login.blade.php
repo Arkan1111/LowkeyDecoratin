@@ -93,7 +93,10 @@
                         <label for="email">Alamat Email</label>
 
                         <div class="auth-input-wrapper">
-                            <span class="auth-input-icon" aria-hidden="true">@</span>
+                            <img
+                                src="{{ Vite::asset('resources/images/emaill.png') }}"
+                                alt="Lowkey Decoration"
+                                style="width: 15px !important; height: 15px !important; object-fit: contain;">
 
                             <input
                                 type="email"
@@ -119,7 +122,10 @@
                         </div>
 
                         <div class="auth-input-wrapper">
-                            <span class="auth-input-icon" aria-hidden="true">♙</span>
+                            <img
+                                src="{{ Vite::asset('resources/images/lockk.png') }}"
+                                alt="Lowkey Decoration"
+                                style="width: 18px !important; height: 18px !important; object-fit: contain;">
 
                             <input
                                 type="password"
