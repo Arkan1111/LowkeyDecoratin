@@ -179,13 +179,13 @@
                         @enderror
                     </div>
 
-                    <a
-                        href="#"
-                        class="auth-forgot"
-                        aria-disabled="true"
-                        onclick="return false;">
-                        Lupa Kata Sandi?
-                    </a>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 12px 0 16px 0; font-size: 13px; color: #c5a880;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #555;">
+                            <input type="checkbox" name="remember" value="1">
+                            Ingat Saya
+                        </label>
+                        <a href="#" class="auth-forgot" onclick="return false;">Lupa Kata Sandi?</a>
+                    </div>
 
                     {{-- ERROR AUTENTIKASI --}}
                     @error('login')
@@ -217,11 +217,11 @@
                         Lanjutkan dengan Google
                     </button>
 
-                    {{-- REGISTER --}}
-                    <div class="auth-register">
-                        Belum memiliki akun?
-                        <span>Buat Akun Baru</span>
-                    </div>
+                {{-- REGISTER --}}
+                <div class="auth-register">
+                    Belum memiliki akun?
+                    <a href="{{ route('register') }}" style="color: #c5a880; font-weight: 600; text-decoration: none;">Buat Akun Baru</a>
+                </div>
 
                 </form>
 

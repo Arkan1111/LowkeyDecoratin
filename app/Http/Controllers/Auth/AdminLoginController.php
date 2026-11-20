@@ -10,13 +10,11 @@ use App\Models\User;
 
 class AdminLoginController extends Controller
 {
-    // Menampilkan halaman login admin
     public function create()
     {
         return view('auth.admin.login');
     }
 
-    // Memproses login admin dan tim
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -28,25 +26,31 @@ class AdminLoginController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        // Cari akun admin atau staff
+        // Cari akun dengan role admin atau keuangan
         $user = User::where('email', strtolower(trim($validated['email'])))
-            ->whereIn('role', ['admin', 'staff'])
+            ->whereIn('role', ['admin', 'keuangan'])
             ->first();
 
-        // Periksa akun dan password
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return back()
                 ->withErrors([
-                    'login' => 'Email atau password Admin/Tim tidak sesuai.'
+                    'login' => 'Email atau password Admin/Keuangan tidak sesuai.'
                 ])
                 ->onlyInput('email');
         }
 
-        // Login admin atau staff
         Auth::login($user, $request->boolean('remember'));
-
         $request->session()->regenerate();
 
-        return redirect()->intended('/admin/dashboard');
+        // Redirect dinamis sesuai role
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        if ($user->role === 'keuangan') {
+            return redirect()->intended('/keuangan/dashboard');
+        }
+
+        return redirect('/');
     }
 }

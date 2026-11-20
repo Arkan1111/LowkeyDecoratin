@@ -121,10 +121,21 @@ $navigation = [
 
                 </a>
 
-                {{-- LOGIN BUTTON --}}
-                <a href="{{ url('/login') }}" class="cust-login-button">
-                    Login Klien / Admin
-                </a>
+                @auth
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 14px; color: #555;">Halo, <strong>{{ Auth::user()->name }}</strong></span>
+                        <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                            @csrf
+                            <button type="submit" class="cust-login-button" style="background: #a33; border: none; cursor: pointer;">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="cust-login-button">
+                        Login Klien / Admin
+                    </a>
+                @endauth
 
             </div>
 

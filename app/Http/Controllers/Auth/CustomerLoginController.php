@@ -10,13 +10,11 @@ use App\Models\User;
 
 class CustomerLoginController extends Controller
 {
-    // Menampilkan halaman login klien
     public function create()
     {
         return view('auth.login');
     }
 
-    // Memproses login klien
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -28,12 +26,10 @@ class CustomerLoginController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        // Cari akun dengan role customer
         $user = User::where('email', strtolower(trim($validated['email'])))
             ->where('role', 'customer')
             ->first();
 
-        // Periksa akun dan password
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return back()
                 ->withErrors([
@@ -42,9 +38,7 @@ class CustomerLoginController extends Controller
                 ->onlyInput('email');
         }
 
-        // Login klien
         Auth::login($user, $request->boolean('remember'));
-
         $request->session()->regenerate();
 
         return redirect()->intended('/');
