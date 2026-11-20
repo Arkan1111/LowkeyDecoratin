@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 // BERANDA PUBLIK
 Route::get('/', function () {
-    return view('customer.home');
-})->name('home');
+    return view('keuangan.dashboard');
+})->name('keuangan.dashboard.preview');
 
 // ==========================================
 // ROUTE GUEST (HANYA UNTUK PENGGUNA BELUM LOGIN)
