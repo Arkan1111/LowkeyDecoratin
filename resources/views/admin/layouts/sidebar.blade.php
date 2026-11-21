@@ -53,6 +53,24 @@
             </svg>
             <span>Mengelola Data Pengguna</span>
         </a>
+
+        
     </nav>
 
+    {{-- LOGOUT --}}
+    <div class="sidebar-logout">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+
+            <button type="submit" class="logout-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M10 17l5-5-5-5" />
+                    <path d="M15 12H3" />
+                    <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6" />
+                </svg>
+                <span>Logout</span>
+            </button>
+        </form>
+    </div>
+    
 </aside>
