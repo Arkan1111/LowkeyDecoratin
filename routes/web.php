@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // BERANDA PUBLIK
+// BERANDA CUSTOMER
 Route::get('/', function () {
-    return view('keuangan.dashboard');
-})->name('keuangan.dashboard.preview');
+    return view('admin.dashboard');
+})->name('dashboard');
 
 // ==========================================
 // ROUTE GUEST (HANYA UNTUK PENGGUNA BELUM LOGIN)
@@ -69,4 +70,15 @@ Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->name('keuangan
     Route::get('/dashboard', function () {
         return view('keuangan.dashboard');
     })->name('dashboard');
+});
+
+Route::prefix('admin')->group(function () {
+
+    Route::view('/paket', 'admin.packages.index');
+
+    Route::view('/reservasi', 'admin.reservations.index');
+
+    Route::view('/portofolio', 'admin.portfolio.index');
+
+    Route::view('/pengguna', 'admin.users.index');
 });

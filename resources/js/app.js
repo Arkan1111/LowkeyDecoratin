@@ -6,6 +6,8 @@ import "../css/keuangan.css";
 import "./keuangan.js";
 import "./cust.js";
 import "./auth.js";
+import "../css/admin-pages.css";
+import "./admin-pages.js";
 import "../images/lowkey-removebg-preview.png";
 import "../images/emaill.png";
 import "../images/lockk.png";
