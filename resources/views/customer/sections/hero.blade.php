@@ -1,3 +1,4 @@
+
 <section class="cd-hero" id="beranda">
 
     <div class="cd-hero-content">
@@ -23,6 +24,7 @@
         </p>
 
         <div class="cd-hero-actions">
+
             <a href="#paket" class="cd-btn-primary">
                 Eksplorasi Paket
             </a>
@@ -30,6 +32,7 @@
             <a href="#ketersediaan" class="cd-btn-light">
                 Booking Tanggal & Kuota
             </a>
+
         </div>
 
         <div class="cd-statistics">
@@ -57,51 +60,62 @@
 
         <img
             src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85"
-            alt="Dekorasi Pernikahan Loki Decoration">
+            alt="Dekorasi Pernikahan Lowkey Decoration"
+        >
 
         <div class="cd-image-caption">
+
             <span>✦ SIGNATURE COMPOSITION</span>
-            <strong>Elegant Wedding Decoration</strong>
+
+            <strong>
+                Elegant Wedding Decoration
+            </strong>
+
         </div>
 
     </div>
 
     {{-- FORM KETERSEDIAAN --}}
-    <div class="cd-availability" id="ketersediaan">
+ <form action="{{ route('customer.cek-kuota') }}" method="GET" class="cd-availability">
 
-        <div class="cd-availability-item">
-            <label>JENIS ACARA</label>
+    <div class="cd-availability-item">
+        <label>JENIS ACARA</label>
 
-            <select>
-                <option>Pernikahan</option>
-                <option>Lamaran</option>
-                <option>Khitan & Sunatan</option>
-                <option>Acara Lainnya</option>
-            </select>
-        </div>
-
-        <div class="cd-availability-item">
-            <label>RENCANA TANGGAL</label>
-
-            <input type="date">
-        </div>
-
-        <div class="cd-availability-item">
-            <label>KOTA LOKASI</label>
-
-            <select>
-                <option>Jakarta</option>
-                <option>Bekasi</option>
-                <option>Karawang</option>
-                <option>Depok</option>
-                <option>Bandung</option>
-            </select>
-        </div>
-
-        <button type="button" class="cd-check-button">
-            ⌕ Cek Kuota
-        </button>
-
+        <select name="jenis_acara" required>
+            <option value="Pernikahan">Pernikahan</option>
+            <option value="Lamaran">Lamaran</option>
+            <option value="Khitan & Sunatan">Khitan & Sunatan</option>
+            <option value="Acara Lainnya">Acara Lainnya</option>
+        </select>
     </div>
+
+    <div class="cd-availability-item">
+        <label>RENCANA TANGGAL</label>
+
+        <input
+            type="date"
+            name="tanggal"
+            min="{{ date('Y-m-d') }}"
+            required
+        >
+    </div>
+
+    <div class="cd-availability-item">
+        <label>KOTA LOKASI</label>
+
+        <select name="kota" required>
+            <option value="Jakarta">Jakarta</option>
+            <option value="Bekasi">Bekasi</option>
+            <option value="Karawang">Karawang</option>
+            <option value="Depok">Depok</option>
+            <option value="Bandung">Bandung</option>
+        </select>
+    </div>
+
+    <button type="submit" class="cd-check-button">
+        ⌕ Cek Kuota
+    </button>
+
+</form>
 
 </section>
