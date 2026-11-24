@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// BERANDA PUBLIK
-// BERANDA CUSTOMER
+// BERANDA PUBLIK (LANDING PAGE CUSTOMER)
 Route::get('/', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+    return view('customer.home');
+})->name('home');
 
 // ==========================================
 // ROUTE GUEST (HANYA UNTUK PENGGUNA BELUM LOGIN)
@@ -51,34 +50,21 @@ Route::post('/logout', function (Request $request) {
 // ROUTE TERPROTEKSI SESUAI ROLE
 // ==========================================
 
-// 1. CUSTOMER
-Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('customer.dashboard');
-    })->name('dashboard');
-});
-
-// 2. ADMIN
+// ADMIN
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    Route::view('/paket', 'admin.packages.index')->name('packages');
+    Route::view('/reservasi', 'admin.reservations.index')->name('reservations');
+    Route::view('/portofolio', 'admin.portfolio.index')->name('portfolio');
+    Route::view('/pengguna', 'admin.users.index')->name('users');
 });
 
-// 3. KEUANGAN
+// KEUANGAN
 Route::middleware(['auth', 'role:keuangan'])->prefix('keuangan')->name('keuangan.')->group(function () {
     Route::get('/dashboard', function () {
         return view('keuangan.dashboard');
     })->name('dashboard');
-});
-
-Route::prefix('admin')->group(function () {
-
-    Route::view('/paket', 'admin.packages.index');
-
-    Route::view('/reservasi', 'admin.reservations.index');
-
-    Route::view('/portofolio', 'admin.portfolio.index');
-
-    Route::view('/pengguna', 'admin.users.index');
 });
