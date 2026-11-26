@@ -111,8 +111,16 @@ Route::middleware(['auth', 'role:admin'])
             return view('admin.dashboard');
         })->name('dashboard');
 
-        Route::view('/paket', 'admin.packages.index')
+        Route::get('/paket', [\App\Http\Controllers\Admin\PackageController::class, 'index'])
             ->name('packages');
+        Route::post('/paket', [\App\Http\Controllers\Admin\PackageController::class, 'store'])
+            ->name('packages.store');
+        Route::put('/paket/{package}', [\App\Http\Controllers\Admin\PackageController::class, 'update'])
+            ->name('packages.update');
+        Route::delete('/paket/{package}', [\App\Http\Controllers\Admin\PackageController::class, 'destroy'])
+            ->name('packages.destroy');
+        Route::patch('/paket/{package}/toggle-status', [\App\Http\Controllers\Admin\PackageController::class, 'toggleStatus'])
+            ->name('packages.toggle-status');
 
         Route::view('/reservasi', 'admin.reservations.index')
             ->name('reservations');

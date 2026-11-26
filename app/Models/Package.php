@@ -13,6 +13,7 @@ class Package extends Model
 
     protected $fillable = [
         'category_id',
+        'type',
         'name',
         'slug',
         'tagline',
