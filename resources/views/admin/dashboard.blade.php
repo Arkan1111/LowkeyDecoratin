@@ -8,7 +8,7 @@
     <div>
         <p class="admin-eyebrow">OPERASIONAL / RINGKASAN</p>
         <h1>Dashboard Operasional</h1>
-        <p class="admin-page-subtitle">Ringkasan aktivitas dan kondisi operasional Loki Decoration.</p>
+        <p class="admin-page-subtitle">Ringkasan aktivitas dan kondisi operasional Lowkey Decoration.</p>
     </div>
 </section>
 

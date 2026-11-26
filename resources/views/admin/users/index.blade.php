@@ -8,7 +8,7 @@
     <div class="admin-heading-copy">
         <p class="admin-eyebrow">MANAJEMEN AKUN / PENGGUNA</p>
         <h1>Mengelola Data Pengguna</h1>
-        <p class="admin-page-subtitle">Kelola akun pelanggan dan tim yang memiliki akses ke sistem Loki Decoration.</p>
+        <p class="admin-page-subtitle">Kelola akun pelanggan dan tim yang memiliki akses ke sistem Lowkey Decoration.</p>
     </div>
     <button type="button" class="admin-primary-button" data-modal-open="userModal">＋ Tambah Pengguna</button>
 </section>
@@ -38,8 +38,8 @@
             <tbody>
                 <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">SA</span>Sarah Anindita</span></td><td>sarah@email.com</td><td><span class="admin-role-pill role-customer">Customer</span></td><td>12 Okt 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
                 <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">RP</span>Rizky Pratama</span></td><td>rizky@email.com</td><td><span class="admin-role-pill role-customer">Customer</span></td><td>18 Okt 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
-                <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">AD</span>Admin Decoration</span></td><td>admin@lokidecoration.test</td><td><span class="admin-role-pill role-admin">Admin</span></td><td>01 Sep 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
-                <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">ST</span>Staff Operasional</span></td><td>staff@lokidecoration.test</td><td><span class="admin-role-pill role-staff">Staff</span></td><td>10 Sep 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
+                <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">AD</span>Admin Decoration</span></td><td>admin@lowkeydecoration.test</td><td><span class="admin-role-pill role-admin">Admin</span></td><td>01 Sep 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
+                <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">ST</span>Staff Operasional</span></td><td>staff@lowkeydecoration.test</td><td><span class="admin-role-pill role-staff">Staff</span></td><td>10 Sep 2026</td><td><span class="admin-status status-approved"><i></i>Aktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
                 <tr><td><span class="admin-customer-cell"><span class="admin-customer-avatar">MW</span>Maya Wulandari</span></td><td>maya@email.com</td><td><span class="admin-role-pill role-customer">Customer</span></td><td>21 Okt 2026</td><td><span class="admin-status status-pending"><i></i>Nonaktif</span></td><td><button type="button" class="admin-row-action" data-demo-action="edit">Edit</button></td></tr>
             </tbody>
         </table>

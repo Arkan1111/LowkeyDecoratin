@@ -8,7 +8,7 @@
     <div class="admin-heading-copy">
         <p class="admin-eyebrow">MANAJEMEN LAYANAN / PAKET &amp; ADD-ON</p>
         <h1>Mengelola Data Paket &amp; Add-on</h1>
-        <p class="admin-page-subtitle">Atur pilihan paket dekorasi, fasilitas, harga, dan layanan tambahan Loki Decoration.</p>
+        <p class="admin-page-subtitle">Atur pilihan paket dekorasi, fasilitas, harga, dan layanan tambahan Lowkey Decoration.</p>
     </div>
     <button type="button" class="admin-primary-button" data-modal-open="packageModal">＋ Tambah Paket</button>
 </section>
