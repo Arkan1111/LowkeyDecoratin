@@ -18,51 +18,40 @@
 
     </div>
 
+    {{-- AMBIL DATA DARI DATABASE (HANYA YANG DIPUBLIKASIKAN) --}}
+    @php
+        $portfolioItems = \App\Models\Inspiration::with('category')
+            ->where('is_featured', true)
+            ->latest()
+            ->get();
+    @endphp
+
     <div class="cd-portfolio-grid">
-
+        @forelse ($portfolioItems as $item)
         <article class="cd-portfolio-card">
 
             <div class="cd-card-top">
-                <span>Grand & Intimate Wedding</span>
-                <small>Kapasitas 100 - 1.800 Tamu</small>
+                <span>{{ $item->venue_type ?? $item->category->name ?? 'Dekorasi' }}</span>
+                <small>{{ $item->guest_capacity ?? 'Kapasitas disesuaikan' }}</small>
             </div>
 
-            <h3>Pernikahan, Akad & Resepsi Agung</h3>
+            <h3>{{ $item->title }}</h3>
 
             <p>
-                Konsep panggung 4-6 meter dengan arch bunga
-                premium, pergola 3D, sofa pengantin berkelas,
-                serta tata lampu warm yang menonjolkan
-                sakralnya hari suci.
+                {{ Str::limit($item->description ?? 'Dokumentasi dekorasi dari Lowkey Decoration.', 120) }}
             </p>
 
             <img
-                src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85"
-                alt="Dekorasi pernikahan">
+                src="{{ asset('storage/' . $item->image_path) }}"
+                alt="{{ $item->title }}"
+                loading="lazy">
 
         </article>
-
-        <article class="cd-portfolio-card">
-
-            <div class="cd-card-top">
-                <span>Intimate & Warm</span>
-                <small>Backdrop 2-7.5m</small>
-            </div>
-
-            <h3>Lamaran & Tunangan</h3>
-
-            <p>
-                Tata panggung personal dengan backdrop pastel
-                earthy, welcome sign akrilik berukir nama,
-                2 standing flower tiang, dan spotlight lembut.
-            </p>
-
-            <img
-                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85"
-                alt="Dekorasi lamaran">
-
-        </article>
-
+        @empty
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">
+            <p>Belum ada portofolio yang dipublikasikan.</p>
+        </div>
+        @endforelse
     </div>
 
 </section>

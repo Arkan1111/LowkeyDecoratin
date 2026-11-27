@@ -131,8 +131,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::delete('/reservasi/{reservation}', [\App\Http\Controllers\Admin\ReservationController::class, 'destroy'])
             ->name('reservations.destroy');
 
-        Route::view('/portofolio', 'admin.portfolio.index')
+        Route::get('/portofolio', [\App\Http\Controllers\Admin\PortfolioController::class, 'index'])
             ->name('portfolio');
+        Route::post('/portofolio', [\App\Http\Controllers\Admin\PortfolioController::class, 'store'])
+            ->name('portfolio.store');
+        Route::put('/portofolio/{inspiration}', [\App\Http\Controllers\Admin\PortfolioController::class, 'update'])
+            ->name('portfolio.update');
+        Route::delete('/portofolio/{inspiration}', [\App\Http\Controllers\Admin\PortfolioController::class, 'destroy'])
+            ->name('portfolio.destroy');
+        Route::patch('/portofolio/{inspiration}/toggle-featured', [\App\Http\Controllers\Admin\PortfolioController::class, 'toggleFeatured'])
+            ->name('portfolio.toggle-featured');
 
         Route::view('/pengguna', 'admin.users.index')
             ->name('users');
