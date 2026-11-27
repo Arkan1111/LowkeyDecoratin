@@ -8,11 +8,11 @@
     <div>
         <p class="admin-eyebrow">OPERASIONAL / RINGKASAN</p>
         <h1>Dashboard Operasional</h1>
-        <p class="admin-page-subtitle">Ringkasan aktivitas dan kondisi operasional Lowkey Decoration.</p>
+        <p class="admin-page-subtitle">Ringkasan aktivitas dan kondisi operasional Lowkey Decoration terkini.</p>
     </div>
 </section>
 
-{{-- STATISTIK UTAMA --}}
+{{-- STATISTIK UTAMA DINAMIS --}}
 <section class="admin-stats-grid" aria-label="Ringkasan statistik">
     <article class="admin-stat-card">
         <div class="admin-stat-icon stat-icon-gold">
@@ -23,8 +23,11 @@
         </div>
         <div class="admin-stat-content">
             <span class="admin-stat-label">Total Reservasi</span>
-            <div class="admin-stat-value-row"><strong>38</strong><span class="admin-stat-trend trend-positive">↑ 12%</span></div>
-            <small>Pemesanan bulan ini</small>
+            <div class="admin-stat-value-row">
+                <strong>{{ $totalReservations }}</strong>
+                <span class="admin-stat-trend trend-positive">Database</span>
+            </div>
+            <small>Seluruh pemesanan masuk</small>
         </div>
         <span class="admin-stat-decoration"></span>
     </article>
@@ -38,8 +41,15 @@
         </div>
         <div class="admin-stat-content">
             <span class="admin-stat-label">Menunggu Konfirmasi</span>
-            <div class="admin-stat-value-row"><strong>8</strong><span class="admin-stat-trend trend-warning">Perlu tindakan</span></div>
-            <small>Reservasi belum dikonfirmasi</small>
+            <div class="admin-stat-value-row">
+                <strong>{{ $pendingReservations }}</strong>
+                @if($pendingReservations > 0)
+                    <span class="admin-stat-trend trend-warning">Perlu tindakan</span>
+                @else
+                    <span class="admin-stat-trend trend-neutral">Aman</span>
+                @endif
+            </div>
+            <small>Reservasi belum diproses</small>
         </div>
         <span class="admin-stat-decoration"></span>
     </article>
@@ -52,9 +62,12 @@
             </svg>
         </div>
         <div class="admin-stat-content">
-            <span class="admin-stat-label">Reservasi Disetujui</span>
-            <div class="admin-stat-value-row"><strong>25</strong><span class="admin-stat-trend trend-positive">↑ 18%</span></div>
-            <small>Pemesanan telah disetujui</small>
+            <span class="admin-stat-label">Reservasi Aktif / Disetujui</span>
+            <div class="admin-stat-value-row">
+                <strong>{{ $approvedReservations }}</strong>
+                <span class="admin-stat-trend trend-positive">Aktif</span>
+            </div>
+            <small>Dalam proses pengerjaan</small>
         </div>
         <span class="admin-stat-decoration"></span>
     </article>
@@ -67,9 +80,12 @@
             </svg>
         </div>
         <div class="admin-stat-content">
-            <span class="admin-stat-label">Paket Dekorasi</span>
-            <div class="admin-stat-value-row"><strong>12</strong><span class="admin-stat-trend trend-neutral">Aktif</span></div>
-            <small>Paket layanan yang tersedia</small>
+            <span class="admin-stat-label">Paket Dekorasi Aktif</span>
+            <div class="admin-stat-value-row">
+                <strong>{{ $activePackages }}</strong>
+                <span class="admin-stat-trend trend-neutral">Tersedia</span>
+            </div>
+            <small>Paket yang siap dipilih</small>
         </div>
         <span class="admin-stat-decoration"></span>
     </article>
@@ -77,6 +93,8 @@
 
 {{-- RESERVASI TERBARU DAN JADWAL MENDATANG --}}
 <section class="admin-dashboard-grid">
+
+    {{-- PANEL 1: RESERVASI TERBARU --}}
     <article class="admin-panel admin-reservations-panel">
         <div class="admin-panel-heading">
             <div class="admin-panel-title-wrap">
@@ -88,7 +106,7 @@
                 </span>
                 <h2>Reservasi Terbaru</h2>
             </div>
-            <a href="#" class="admin-panel-link" aria-disabled="true">Lihat Semua <span>→</span></a>
+            <a href="{{ route('admin.reservations') }}" class="admin-panel-link">Lihat Semua <span>→</span></a>
         </div>
 
         <div class="admin-table-wrap">
@@ -96,47 +114,57 @@
                 <thead>
                     <tr>
                         <th>Pelanggan</th>
-                        <th>Acara</th>
+                        <th>Lokasi / Catatan</th>
                         <th>Paket</th>
                         <th>Tanggal Acara</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($recentReservations as $res)
+                    @php
+                        $firstDetail = $res->details->first();
+                        $packageName = $firstDetail->package->name ?? 'Paket';
+                        $initials = strtoupper(substr($res->user->name ?? 'PL', 0, 2));
+
+                        $statusClass = 'status-pending';
+                        if (in_array($res->status, ['diterima', 'dp_dibayar', 'lunas', 'selesai'])) {
+                            $statusClass = 'status-approved';
+                        } elseif ($res->status === 'dibatalkan') {
+                            $statusClass = 'status-rejected';
+                        }
+                    @endphp
                     <tr>
-                        <td><span class="admin-customer-cell"><span class="admin-customer-avatar">SA</span>Sarah Anindita</span></td>
-                        <td>Pernikahan</td>
-                        <td><span class="admin-package-pill package-gold">Gold</span></td>
-                        <td>25 Nov 2026</td>
-                        <td><span class="admin-status status-pending"><i></i>Menunggu</span></td>
+                        <td>
+                            <span class="admin-customer-cell">
+                                <span class="admin-customer-avatar">{{ $initials }}</span>
+                                {{ $res->user->name ?? 'Pelanggan' }}
+                            </span>
+                        </td>
+                        <td>{{ $res->venue_name ?? Str::limit($res->venue_address, 25) }}</td>
+                        <td>
+                            <span class="admin-package-pill package-gold">{{ $packageName }}</span>
+                        </td>
+                        <td>{{ $res->event_date->translatedFormat('d M Y') }}</td>
+                        <td>
+                            <span class="admin-status {{ $statusClass }}">
+                                <i></i>{{ ucfirst(str_replace('_', ' ', $res->status)) }}
+                            </span>
+                        </td>
                     </tr>
+                    @empty
                     <tr>
-                        <td><span class="admin-customer-cell"><span class="admin-customer-avatar">RP</span>Rizky Pratama</span></td>
-                        <td>Lamaran</td>
-                        <td><span class="admin-package-pill package-silver">Silver</span></td>
-                        <td>28 Nov 2026</td>
-                        <td><span class="admin-status status-approved"><i></i>Disetujui</span></td>
+                        <td colspan="5" style="text-align: center; padding: 25px; color: #777;">
+                            Belum ada aktivitas reservasi terbaru.
+                        </td>
                     </tr>
-                    <tr>
-                        <td><span class="admin-customer-cell"><span class="admin-customer-avatar">NP</span>Nadia Putri</span></td>
-                        <td>Pernikahan</td>
-                        <td><span class="admin-package-pill package-gold">Gold</span></td>
-                        <td>02 Des 2026</td>
-                        <td><span class="admin-status status-pending"><i></i>Menunggu</span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="admin-customer-cell"><span class="admin-customer-avatar">DA</span>Dimas Ardi</span></td>
-                        <td>Wedding Party</td>
-                        <td><span class="admin-package-pill package-bronze">Bronze</span></td>
-                        <td>06 Des 2026</td>
-                        <td><span class="admin-status status-approved"><i></i>Disetujui</span></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-        <p class="admin-demo-note">Data contoh tampilan · Belum terhubung ke database</p>
     </article>
 
+    {{-- PANEL 2: JADWAL ACARA MENDATANG --}}
     <article class="admin-panel admin-schedule-panel">
         <div class="admin-panel-heading">
             <div class="admin-panel-title-wrap">
@@ -146,49 +174,34 @@
                         <path d="M16 3v4M8 3v4M3 10h18" />
                     </svg>
                 </span>
-                <h2>Jadwal Acara Mendatang</h2>
+                <h2>Jadwal Acara Terdekat</h2>
             </div>
-            <a href="#" class="admin-panel-link" aria-disabled="true">Lihat Kalender <span>→</span></a>
+            <a href="{{ route('admin.reservations') }}" class="admin-panel-link">Semua Jadwal <span>→</span></a>
         </div>
 
         <div class="admin-event-list">
+            @forelse ($upcomingEvents as $evt)
+            @php
+                $pkg = $evt->details->first()->package->name ?? 'Dekorasi';
+            @endphp
             <div class="admin-event-item">
-                <div class="admin-event-date"><strong>25</strong><span>Nov</span></div>
-                <div class="admin-event-info">
-                    <strong>Pernikahan Sarah &amp; Andi</strong>
-                    <span><b>⌖</b> Gedung Serbaguna · Paket Gold</span>
+                <div class="admin-event-date">
+                    <strong>{{ $evt->event_date->format('d') }}</strong>
+                    <span>{{ $evt->event_date->translatedFormat('M') }}</span>
                 </div>
-                <span class="admin-status status-approved"><i></i>Terkonfirmasi</span>
-            </div>
-
-            <div class="admin-event-item">
-                <div class="admin-event-date"><strong>28</strong><span>Nov</span></div>
                 <div class="admin-event-info">
-                    <strong>Lamaran Rizky &amp; Nabila</strong>
-                    <span><b>⌖</b> Rumah Keluarga · Paket Silver</span>
+                    <strong>Acara {{ $evt->user->name ?? 'Klien' }}</strong>
+                    <span><b>⌖</b> {{ $evt->venue_name ?? 'Lokasi Klien' }} · {{ $pkg }}</span>
                 </div>
-                <span class="admin-status status-approved"><i></i>Terkonfirmasi</span>
+                <span class="admin-status status-approved"><i></i>{{ ucfirst($evt->status) }}</span>
             </div>
-
-            <div class="admin-event-item">
-                <div class="admin-event-date"><strong>02</strong><span>Des</span></div>
-                <div class="admin-event-info">
-                    <strong>Pernikahan Nadia &amp; Fajar</strong>
-                    <span><b>⌖</b> Ballroom Hotel · Paket Gold</span>
-                </div>
-                <span class="admin-status status-pending"><i></i>Menunggu</span>
+            @empty
+            <div style="padding: 25px; text-align: center; color: #777;">
+                Belum ada jadwal acara terdekat yang terkonfirmasi.
             </div>
-
-            <div class="admin-event-item">
-                <div class="admin-event-date"><strong>06</strong><span>Des</span></div>
-                <div class="admin-event-info">
-                    <strong>Wedding Party Dimas &amp; Ara</strong>
-                    <span><b>⌖</b> Outdoor Venue · Paket Bronze</span>
-                </div>
-                <span class="admin-status status-approved"><i></i>Terkonfirmasi</span>
-            </div>
+            @endforelse
         </div>
-        <p class="admin-demo-note">Jadwal contoh tampilan · Belum terhubung ke database</p>
     </article>
+
 </section>
 @endsection

@@ -107,9 +107,8 @@ Route::middleware(['auth', 'role:admin'])
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])
+            ->name('dashboard');
 
         Route::get('/paket', [\App\Http\Controllers\Admin\PackageController::class, 'index'])
             ->name('packages');
