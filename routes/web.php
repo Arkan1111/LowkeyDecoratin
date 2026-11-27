@@ -142,8 +142,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('/portofolio/{inspiration}/toggle-featured', [\App\Http\Controllers\Admin\PortfolioController::class, 'toggleFeatured'])
             ->name('portfolio.toggle-featured');
 
-        Route::view('/pengguna', 'admin.users.index')
+        Route::get('/pengguna', [\App\Http\Controllers\Admin\UserController::class, 'index'])
             ->name('users');
+        Route::post('/pengguna', [\App\Http\Controllers\Admin\UserController::class, 'store'])
+            ->name('users.store');
+        Route::put('/pengguna/{user}', [\App\Http\Controllers\Admin\UserController::class, 'update'])
+            ->name('users.update');
+        Route::delete('/pengguna/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])
+            ->name('users.destroy');
+        Route::patch('/pengguna/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])
+            ->name('users.toggle-status');
 
     });
 
