@@ -69,5 +69,31 @@ class MasterDataSeeder extends Seeder
             'description' => 'Papan sambutan akrilik/kayu custom nama pengantin.',
             'is_active' => true,
         ]);
+
+
+        $customer = \App\Models\User::where('role', 'customer')->first();
+        $bronze = \App\Models\Package::where('slug', 'paket-bronze')->first();
+
+        if ($customer && $bronze && !\App\Models\Reservation::exists()) {
+            $res = \App\Models\Reservation::create([
+                'reservation_code' => 'RSV-20261127-0001',
+                'user_id' => $customer->id,
+                'event_date' => now()->addDays(14)->toDateString(),
+                'event_time' => '10:00',
+                'venue_name' => 'Gedung Serbaguna Kemang',
+                'venue_address' => 'Jl. Kemang Raya No. 45, Jakarta Selatan',
+                'concept_notes' => 'Nuansa Minimalis Warm White & Peach Floral',
+                'total_amount' => $bronze->price,
+                'status' => 'menunggu',
+            ]);
+
+            \App\Models\ReservationDetail::create([
+                'reservation_id' => $res->id,
+                'package_id' => $bronze->id,
+                'price' => $bronze->price,
+                'quantity' => 1,
+                'subtotal' => $bronze->price,
+            ]);
+        }
     }
 }

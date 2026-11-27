@@ -122,8 +122,14 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('/paket/{package}/toggle-status', [\App\Http\Controllers\Admin\PackageController::class, 'toggleStatus'])
             ->name('packages.toggle-status');
 
-        Route::view('/reservasi', 'admin.reservations.index')
+        Route::get('/reservasi', [\App\Http\Controllers\Admin\ReservationController::class, 'index'])
             ->name('reservations');
+        Route::post('/reservasi', [\App\Http\Controllers\Admin\ReservationController::class, 'store'])
+            ->name('reservations.store');
+        Route::patch('/reservasi/{reservation}/status', [\App\Http\Controllers\Admin\ReservationController::class, 'updateStatus'])
+            ->name('reservations.update-status');
+        Route::delete('/reservasi/{reservation}', [\App\Http\Controllers\Admin\ReservationController::class, 'destroy'])
+            ->name('reservations.destroy');
 
         Route::view('/portofolio', 'admin.portfolio.index')
             ->name('portfolio');
